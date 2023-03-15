@@ -34,7 +34,6 @@ export const useSelectedText = () => {
     position: "absolute",
     top: `${cords && cords.top - 35}px`,
     left: `${cords?.left}px`,
-    background: "blue",
   };
   return { text, parentRef, styles, submit };
 };
