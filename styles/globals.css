@@ -4,6 +4,10 @@
 
 @layer base {
   body {
-    @apply dark:bg-black dark:text-gray-100 bg-gray-50 text-gray-500;
+    @apply dark:bg-backgroundDark dark:text-gray-100 bg-gray-100 text-gray-500;
+  }
+  .sidebar-icon {
+    @apply relative flex items-center justify-start gap-2 h-12 my-3 px-5 text-gray-700 hover:text-primary hover:bg-white rounded-xl cursor-pointer;
+    @apply dark:bg-backgroundDark dark:text-gray-200 dark:shadow-layoutDark dark:shadow-md dark:hover:text-primary;
   }
 }

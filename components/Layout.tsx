@@ -1,18 +1,20 @@
+import { ContentWrapper } from "./ContentWrapper/ContentWrapper";
 import { Header } from "./Header/Header";
 import { SelectTextWrapper } from "./SelectTextWrapper/SelectTextWrapper";
+import { Sidebar } from "./Sidebar/Sidebar";
+import { UploadFile } from "./UploadFile/UploadFile";
 
-export const Layout = () => {
+export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
       <Header />
-      <SelectTextWrapper>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur ullam
-        inventore sit facilis a laboriosam, nihil repellendus odit perspiciatis
-        tempora totam nobis nesciunt rem error perferendis earum vel facere,
-        officia dignissimos ad, voluptates voluptatibus? Nesciunt voluptatibus
-        laudantium earum harum officiis omnis perspiciatis esse beatae.
-        Laboriosam, minus accusantium? Beatae, vero nulla.
-      </SelectTextWrapper>
+      <Sidebar />
+      <ContentWrapper>{children}</ContentWrapper>
+      {/* <SelectTextWrapper>
+      </SelectTextWrapper> */}
+      {/* <div className="ml-10">
+        <UploadFile />
+      </div> */}
     </div>
   );
   // return (
