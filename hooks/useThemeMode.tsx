@@ -16,7 +16,7 @@ export const useThemeMode = () => {
     if (currentTheme === "dark") {
       return (
         <button
-          className="bg-backgroundDark text-gray-500 rounded-lg shadow-layoutDark text-sm px-2 py-2 mr-2 mb-2"
+          className="rounded-lg text-sm px-2 py-2 mr-2 mb-2 border border-blue-800"
           onClick={() => setTheme("light")}
         >
           <svg

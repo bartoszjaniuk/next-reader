@@ -6,18 +6,13 @@ import { UploadFile } from "./UploadFile/UploadFile";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+    <div className="flex">
       <Header />
       <Sidebar />
       <ContentWrapper>{children}</ContentWrapper>
-      {/* <SelectTextWrapper>
-      </SelectTextWrapper> */}
-      {/* <div className="ml-10">
-        <UploadFile />
-      </div> */}
+      {/* <SelectTextWrapper>elo elo elo</SelectTextWrapper> */}
     </div>
   );
-  // return (
   //   <>
   //     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   //       <div className="px-3 py-3 lg:px-5 lg:pl-3">
