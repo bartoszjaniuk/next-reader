@@ -165,7 +165,7 @@ export function UploadFile() {
           </button>
           <Book pageNumber={currentPage}>
             {data?.data.data.pages[currentPage].page.words.map((word, i) => (
-              <CustomTooltip key={i} text="test" placement="top">
+              <CustomTooltip key={i} text="custom tooltip" placement="top">
                 <span
                   className="hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1
 "

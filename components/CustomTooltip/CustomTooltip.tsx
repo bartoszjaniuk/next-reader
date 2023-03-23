@@ -1,27 +1,15 @@
-import {
-  cloneElement,
-  FC,
-  isValidElement,
-  PropsWithChildren,
-  ReactElement,
-  useState,
-} from "react";
+import { cloneElement, isValidElement, ReactElement, useState } from "react";
 import ReactDOM from "react-dom";
-import { Placement } from "@popperjs/core";
 import { usePopper } from "react-popper";
+import { useComponentVisible } from "@/hooks/useComponentVisible";
+import { CustomTooltipProps } from "./CustomTooltip.types";
 
-interface Props extends PropsWithChildren {
-  text: string;
-  placement: Placement;
-  className?: string;
-}
-
-export const CustomTooltip: FC<Props> = ({
+export const CustomTooltip = ({
   children,
   text,
   placement,
   className,
-}) => {
+}: CustomTooltipProps) => {
   const [popperReference, setPopperReference] = useState<HTMLDivElement | null>(
     null
   );
@@ -29,8 +17,8 @@ export const CustomTooltip: FC<Props> = ({
     null
   );
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
-
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false);
 
   const { styles, attributes } = usePopper(popperReference, popperElement, {
     modifiers: [
@@ -46,8 +34,7 @@ export const CustomTooltip: FC<Props> = ({
 
   const childrenWithPopperProps = cloneElement(children as ReactElement, {
     ref: setPopperReference,
-    onMouseEnter: () => setIsVisible(() => true),
-    onMouseLeave: () => setIsVisible(() => false),
+    onClick: () => setIsComponentVisible(true),
     "aria-describedby": "tooltip-message",
   });
 
@@ -61,18 +48,28 @@ export const CustomTooltip: FC<Props> = ({
           role="tooltip"
           id="tooltip-message"
           style={styles.popper}
-          className={`shadow-sm ${isVisible ? `opacity-100` : `opacity-0`} ${
-            isVisible ? "visible" : "invisible"
+          className={`shadow-sm ${
+            isComponentVisible ? `opacity-100` : `opacity-0`
+          } ${
+            isComponentVisible ? "visible" : "invisible"
           }  rounded-lg shadow-sm transition-all duration-300`}
           ref={setPopperElement}
           {...attributes.popper}
         >
           <div
+            ref={ref}
             className={`px-3 z-20 grid place-items-center relative font-medium h-[30px]
             min-w-64 w-auto text-white bg-gray-900 rounded text-sm
            shadow-sm  tooltip dark:bg-gray-700 ${className}`}
           >
-            <span>{text}</span>
+            <button
+              className="bg-primary"
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.stopPropagation();
+              }}
+            >
+              {text}
+            </button>
           </div>
           <div
             ref={setArrowElement}
