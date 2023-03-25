@@ -3,7 +3,7 @@ export const ArrowIcon = ({
   onClick,
 }: {
   className: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <svg

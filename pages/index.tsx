@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <div className="mt-10">
+    <>
       <UploadFile />
-    </div>
+    </>
   );
 }

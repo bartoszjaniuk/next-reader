@@ -1,5 +1,5 @@
+import { useState } from "react";
 import Image from "next/image";
-import React, { useState } from "react";
 import { icons } from "./icons";
 import LogoImage from "../../assets/book-logo.png";
 import { ArrowIcon } from "../ArrowIcon/ArrowIcon";
