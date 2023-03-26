@@ -12,12 +12,14 @@ export const useUploadFile = () => {
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("e.target.files", e.target.files);
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
   };
 
   const handleUploadFile = () => {
+    console.log({ file });
     if (!file) return;
     uploadFile(file);
   };

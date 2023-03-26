@@ -8,23 +8,6 @@ import { DragAndDropZone } from "../DragAndDropZone/DragAndDropZone";
 import { Badge } from "../Badge/Badge";
 import { UploadButton } from "../UploadButton/UploadButton";
 
-export const Tooltip = ({
-  content,
-  children,
-}: {
-  content: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className="group relative block">
-      {children}
-      <span className="absolute top-10 scale-0 transition-all rounded bg-gray-800 p-2 text-xs text-white group-hover:scale-100">
-        {content}
-      </span>
-    </div>
-  );
-};
-
 export function UploadFile() {
   const {
     data,
