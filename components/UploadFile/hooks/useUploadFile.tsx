@@ -7,14 +7,12 @@ export const useUploadFile = () => {
 
   const fileRef = useRef<HTMLInputElement | null>(null);
 
-  const { data, mutate: uploadFile } = useMutation({
+  const {
+    data,
+    mutate: uploadFile,
+    isLoading,
+  } = useMutation({
     mutationFn: uploadFileAction,
-    onSuccess: () => {
-      alert("Sukcess");
-    },
-    onError: (error) => {
-      alert(`Error: ${error}`);
-    },
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +22,6 @@ export const useUploadFile = () => {
   };
 
   const handleUploadFile = () => {
-    console.log(file?.name, "file?.name");
     if (!file) return;
     uploadFile(file);
   };
@@ -42,5 +39,6 @@ export const useUploadFile = () => {
     removeFile,
     file,
     fileRef,
+    isLoading,
   };
 };

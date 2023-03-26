@@ -7,7 +7,6 @@ export const DragAndDropZone = ({
   fileRef: MutableRefObject<HTMLInputElement | null>;
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) => {
-  console.log("DragAndDropZone");
   return (
     <>
       <label

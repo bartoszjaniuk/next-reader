@@ -29,15 +29,6 @@ export const Sidebar = () => {
       />
       {icons.map((icon) => {
         return (
-          // <li
-          //   className={`sidebar-icon ${
-          //     isOpen ? "justify-start" : "justify-center"
-          //   } text-sm`}
-          //   key={icon.name}
-          // >
-          //   {icon.icon}
-          //   {isOpen && "TEXT"}
-          // </li>
           <li key={icon.name} className="sidebar-icon">
             <span className="text-2xl block float-left">{icon.icon}</span>
             <span
