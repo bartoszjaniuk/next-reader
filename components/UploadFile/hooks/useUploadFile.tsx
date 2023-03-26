@@ -9,17 +9,22 @@ export const useUploadFile = () => {
 
   const { data, mutate: uploadFile } = useMutation({
     mutationFn: uploadFileAction,
+    onSuccess: () => {
+      alert("Sukcess");
+    },
+    onError: (error) => {
+      alert(`Error: ${error}`);
+    },
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("e.target.files", e.target.files);
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
   };
 
   const handleUploadFile = () => {
-    console.log({ file });
+    console.log(file?.name, "file?.name");
     if (!file) return;
     uploadFile(file);
   };
