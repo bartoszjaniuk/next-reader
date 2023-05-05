@@ -1,33 +1,63 @@
 import { postTranslateText } from "@/api/translate/translate";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
-import { Book } from "../Book/Book";
-import { BookNavigation } from "../BookNavigation/BookNavigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { CustomTooltip } from "../CustomTooltip/CustomTooltip";
-import { SerializedBook } from "../UploadFile/UploadFile.types";
+import { Book, Word } from "@/types/Book";
+import { BookScreen } from "../BookScreen/BookScreen";
+import { BookNavigationContainer } from "../BookNavigation/BookNavigationContainer";
+import { postUpdateWord } from "@/api/word/updateWord";
+import { useState } from "react";
 
-export const BookReader = ({
-  data,
-}: {
-  data: AxiosResponse<SerializedBook, any> | undefined;
-}) => {
+type BookReaderProps = {
+  book: Book;
+};
+
+export const BookReader = ({ book }: BookReaderProps) => {
+  const [wordToTranslate, setWordToTranslate] = useState<Word | undefined>(
+    undefined
+  );
   const {
     data: translation,
     mutate: translateText,
     isLoading,
   } = useMutation({
     mutationFn: postTranslateText,
+    onSuccess: (data) => {
+      if (!wordToTranslate) return;
+      updateWord({
+        isTranslated: true,
+        translation: data.data.translated_text,
+        content: wordToTranslate.content,
+        id: wordToTranslate._id,
+      });
+    },
   });
+
+  const { mutate: updateWord } = useMutation(postUpdateWord);
   return (
-    <>
-      {data && (
-        <BookNavigation totalPages={data?.data.data.pages.length}>
-          {(currentPage) => (
-            <Book>
-              {data?.data.data.pages[currentPage].page.words.map((word, i) => (
+    <BookNavigationContainer session={book.session}>
+      {(currentPage) => (
+        <BookScreen>
+          {book.pages[currentPage].page.words.map((word, i) => (
+            <>
+              {word.isTranslated && (
+                <CustomTooltip
+                  onClick={() => null}
+                  isTranslationLoading={false}
+                  translation={word.translation}
+                  key={i}
+                  text="custom tooltip"
+                  placement="top"
+                >
+                  <span className="text-primary pb-1">
+                    {word.content + " "}
+                  </span>
+                </CustomTooltip>
+              )}
+              {!word.isTranslated && (
                 <CustomTooltip
                   onClick={() => {
                     if (translation?.data.text_lang === word.content) return;
+                    setWordToTranslate(word);
                     translateText(word.content);
                   }}
                   isTranslationLoading={isLoading}
@@ -40,11 +70,11 @@ export const BookReader = ({
                     {word.content + " "}
                   </span>
                 </CustomTooltip>
-              ))}
-            </Book>
-          )}
-        </BookNavigation>
+              )}
+            </>
+          ))}
+        </BookScreen>
       )}
-    </>
+    </BookNavigationContainer>
   );
 };

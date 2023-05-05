@@ -1,17 +1,17 @@
-import { Layout } from "@/components/Layout";
-import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { SessionProvider } from "next-auth/react";
+import { AppProviders } from "@/providers/AppProviders";
 import "@/styles/globals.css";
-import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
-    <ThemeProvider attribute="class">
-      <ReactQueryProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ReactQueryProvider>
-    </ThemeProvider>
+    <SessionProvider session={session}>
+      <AppProviders>
+        <Component {...pageProps} />
+      </AppProviders>
+    </SessionProvider>
   );
 }

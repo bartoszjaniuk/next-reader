@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { ContentWrapper } from "./ContentWrapper/ContentWrapper";
 import { Header } from "./Header/Header";
 import { SelectTextWrapper } from "./SelectTextWrapper/SelectTextWrapper";
@@ -5,11 +6,15 @@ import { Sidebar } from "./Sidebar/Sidebar";
 import { UploadFile } from "./UploadFile/UploadFile";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+  const isWithoutLayout = router.pathname !== "/login";
+
   return (
     <div className="flex">
       <Header />
-      <Sidebar />
-      <ContentWrapper>{children}</ContentWrapper>
+      {isWithoutLayout && <Sidebar />}
+      {isWithoutLayout && <ContentWrapper>{children}</ContentWrapper>}
+      {!isWithoutLayout && children}
       {/* <SelectTextWrapper>elo elo elo</SelectTextWrapper> */}
     </div>
   );

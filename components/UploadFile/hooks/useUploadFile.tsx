@@ -1,5 +1,8 @@
 import { ChangeEvent, useRef, useState } from "react";
-import { uploadFileAction } from "@/api/uploadFile/uploadFile";
+import {
+  createBookAction,
+  uploadFileAction,
+} from "@/api/uploadFile/uploadFile";
 import { useMutation } from "@tanstack/react-query";
 
 export const useUploadFile = () => {
@@ -13,6 +16,17 @@ export const useUploadFile = () => {
     isLoading,
   } = useMutation({
     mutationFn: uploadFileAction,
+    onSuccess: (data) => {
+      if (!data.data.data) return;
+      createBook({payload: {...data?.data?.data}});
+    },
+  });
+
+  const { mutate: createBook } = useMutation({
+    mutationFn: createBookAction,
+    onSuccess: (data) => {
+      console.log({ data });
+    },
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {

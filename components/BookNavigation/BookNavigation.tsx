@@ -1,36 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import { ArrowIcon } from "../ArrowIcon/ArrowIcon";
 import { ProgressBar } from "../Progressbar/ProgressBar";
+import { Loader } from "../Loader/Loader";
+
+type BookNavigationProps = {
+  progress: number;
+  currentPage: number;
+  handleChangePage: (direction: "prev" | "next") => void;
+  children: (pageNumber: number) => React.ReactNode;
+  isSessionUpdating: boolean;
+};
 
 export const BookNavigation = ({
+  currentPage,
+  handleChangePage,
+  progress,
   children,
-  totalPages,
-}: {
-  children: (pageNumber: number) => React.ReactNode;
-  totalPages: number;
-}) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const handleNextPage = () => setCurrentPage((prevValue) => prevValue + 1);
-  const handlePrevPage = () => {
-    if (currentPage <= 1) return;
-    setCurrentPage((prevValue) => prevValue - 1);
-  };
-
-  const progressPercentage = Math.ceil((currentPage / totalPages) * 100);
-
+  isSessionUpdating,
+}: BookNavigationProps) => {
   return (
     <>
-      <ProgressBar progressPercentage={progressPercentage} />
+      <ProgressBar progressPercentage={progress} />
       {children(currentPage)}
       <div className="flex items-center mt-4">
         <ArrowIcon
-          onClick={handlePrevPage}
+          disabled={isSessionUpdating}
+          onClick={() => handleChangePage("prev")}
           className="w-10 h-10 bg-gray-200 text-gray-900 border dark:bg-gray-700 dark:text-white dark:border-backgroundDark text-3xl rounded-full shadow-sm p-1 cursor-pointer"
         />
-        <span className="text-base px-4">Strona {currentPage}</span>
+
+        {isSessionUpdating && (
+          <span className="text-base px-8">
+            <Loader />
+          </span>
+        )}
+        {!isSessionUpdating && (
+          <span className="text-base px-4">Strona {currentPage}</span>
+        )}
         <ArrowIcon
-          onClick={handleNextPage}
-          className="w-10 h-10 bg-gray-200 text-gray-900 border dark:bg-gray-700 dark:text-white dark:border-backgroundDark text-3xl rounded-full shadow-sm p-1 cursor-pointer rotate-180"
+          disabled={isSessionUpdating}
+          onClick={() => handleChangePage("next")}
+          className="w-10 h-10 disabled:bg-red-500 bg-gray-200 text-gray-900 border dark:bg-gray-700 dark:text-white dark:border-backgroundDark text-3xl rounded-full shadow-sm p-1 cursor-pointer rotate-180"
         />
       </div>
     </>

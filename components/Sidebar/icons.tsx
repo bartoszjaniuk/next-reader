@@ -1,6 +1,7 @@
 export const icons = [
   {
     name: "Home",
+    path: '/',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +20,8 @@ export const icons = [
     ),
   },
   {
-    name: "Collection",
+    name: "Dodaj plik",
+    path: 'dodajPlik',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +40,8 @@ export const icons = [
     ),
   },
   {
-    name: "Materials",
+    name: "Materiały",
+    path: '/materialy',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

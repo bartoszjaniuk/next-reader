@@ -1,13 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { Book } from "../Book/Book";
-import { CustomTooltip } from "../CustomTooltip/CustomTooltip";
-import { postTranslateText } from "@/api/translate/translate";
 import { useUploadFile } from "./hooks/useUploadFile";
-import { BookNavigation } from "../BookNavigation/BookNavigation";
 import { DragAndDropZone } from "../DragAndDropZone/DragAndDropZone";
 import { Badge } from "../Badge/Badge";
 import { UploadButton } from "../UploadButton/UploadButton";
-import { BookReader } from "../BookReader/BookReader";
 
 export function UploadFile() {
   const {
@@ -42,7 +36,6 @@ export function UploadFile() {
           )}
         </>
       )}
-      {data && <BookReader data={data} />}
     </div>
   );
 }
