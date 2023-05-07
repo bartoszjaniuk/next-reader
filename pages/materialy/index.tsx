@@ -18,7 +18,7 @@ const MaterialsPage = ({
   return (
     <div
       data-testid="MaterialsPage--Container"
-      className="w-full h-full flex  flex-wrap gap-4"
+      className="w-full h-full flex flex-wrap gap-4"
     >
       {!!books.length &&
         books.map((book) => {

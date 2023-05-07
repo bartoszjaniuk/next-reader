@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 export const validationSchema = Yup.object({
     email: Yup.string()
-      .max(30, 'Must be 30 characters or less')
-      .email('Invalid email address')
-      .required('Please enter your email'),
-    password: Yup.string().required('Please enter your password'),
+      .max(30, 'Maksymalna ilość znaków wynosi 30')
+      .email('Nieprawidłowy adres email')
+      .required('Pole jest wymagane'),
+    password: Yup.string().required('Pole jest wymagane'),
    })

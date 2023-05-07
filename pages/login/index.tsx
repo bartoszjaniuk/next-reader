@@ -10,10 +10,10 @@ const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null | undefined>(null);
   return (
-    <main className="w-full h-screen flex items-center justify-center">
+    <main className="w-full h-screen flex items-center justify-center md:px-6">
       {/* CARD */}
       <div
-        className="text-gray-700 rounded-3xl shadow-xl shadow-slate-300 dark:shadow-transparent w-full overflow-hidden"
+        className="text-gray-700 rounded-3xl md:shadow-xl md:shadow-slate-300 md:dark:shadow-transparent w-full overflow-hidden"
         style={{ maxWidth: "1000px" }}
       >
         <div className="md:flex w-full">
@@ -244,14 +244,11 @@ const LoginPage = () => {
             >
               {(formik) => (
                 <form
-                  // className="md:w-8/12 lg:ml-6 lg:w-9/12"
-                  // className="h-full"
                   onSubmit={formik.handleSubmit}
                 >
                   <input
                     name="csrfToken"
                     type="hidden"
-                    //   defaultValue={csrfToken}
                   />
 
                   <div className="text-red-400 text-md text-center rounded p-2">
@@ -323,7 +320,7 @@ const LoginPage = () => {
  hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
                     >
                       <div className="relative flex items-center space-x-4 justify-center">
-                        <img
+                        <Image
                           src="https://tailus.io/sources/blocks/social/preview/images/google.svg"
                           className="absolute left-0 w-5"
                           alt="google logo"
@@ -356,7 +353,7 @@ const LoginPage = () => {
                                      hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
                     >
                       <div className="relative flex items-center space-x-4 justify-center">
-                        <img
+                        <Image
                           src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"
                           className="absolute left-0 w-5"
                           alt="Facebook logo"
