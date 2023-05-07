@@ -1,5 +1,5 @@
-import { getBookSession } from "@/api/readingSession/getBookSession";
-import { updateSessionAction } from "@/api/readingSession/updateSession";
+import { getBookSession } from "@/apiFunctions/readingSession/getBookSession";
+import { updateSessionAction } from "@/apiFunctions/readingSession/updateSession";
 import { Session } from "@/types/Session";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -12,9 +12,7 @@ type UseBookNavigationProps = {
 export const useBookNavigation = ({ session }: UseBookNavigationProps) => {
   const { data: userSession } = useSession();
 
-  const {
-    refetch,
-  } = useQuery(
+  const { refetch } = useQuery(
     [`getBookSession_${session.book}`],
     () => getBookSession(userSession!, session.book),
     { enabled: !!userSession }
@@ -31,10 +29,9 @@ export const useBookNavigation = ({ session }: UseBookNavigationProps) => {
   });
 
   useEffect(() => {
-    console.log('refetching');
+    console.log("refetching");
     refetch();
   }, [currentPage, refetch]);
-
 
   const handleChangePage = (direction: "next" | "prev") => {
     if (direction === "next") {

@@ -2,7 +2,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import {
   createBookAction,
   uploadFileAction,
-} from "@/api/uploadFile/uploadFile";
+} from "@/apiFunctions/uploadFile/uploadFile";
 import { useMutation } from "@tanstack/react-query";
 
 export const useUploadFile = () => {
@@ -18,7 +18,7 @@ export const useUploadFile = () => {
     mutationFn: uploadFileAction,
     onSuccess: (data) => {
       if (!data.data.data) return;
-      createBook({payload: {...data?.data?.data}});
+      createBook({ payload: { ...data?.data?.data } });
     },
   });
 

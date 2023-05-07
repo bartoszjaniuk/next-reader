@@ -1,4 +1,4 @@
-import { getBookAction } from "@/api/book/getBook";
+import { getBookAction } from "@/apiFunctions/book/getBook";
 import { BookReader } from "@/components/BookReader/BookReader";
 import { Book } from "@/types/Book";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,7 @@ const useMaterials = () => {
   const bookId = query.id;
   const { data: userSession } = useSession();
 
-  console.log({userSession, bookId});
+  console.log({ userSession, bookId });
 
   const { isLoading, data, refetch } = useQuery([`book_${bookId}`], {
     enabled: !!bookId && !!userSession,

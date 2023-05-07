@@ -1,10 +1,10 @@
-import { postTranslateText } from "@/api/translate/translate";
+import { postTranslateText } from "@/apiFunctions/translate/translate";
 import { useMutation } from "@tanstack/react-query";
 import { CustomTooltip } from "../CustomTooltip/CustomTooltip";
 import { Book, Word } from "@/types/Book";
 import { BookScreen } from "../BookScreen/BookScreen";
 import { BookNavigationContainer } from "../BookNavigation/BookNavigationContainer";
-import { postUpdateWord } from "@/api/word/updateWord";
+import { postUpdateWord } from "@/apiFunctions/word/updateWord";
 import { useState } from "react";
 
 type BookReaderProps = {
@@ -38,9 +38,12 @@ export const BookReader = ({
     },
   });
 
-  const { mutate: updateWord, isLoading: isUpdating } = useMutation(postUpdateWord, {
-    onSuccess: () => refetchBook(),
-  });
+  const { mutate: updateWord, isLoading: isUpdating } = useMutation(
+    postUpdateWord,
+    {
+      onSuccess: () => refetchBook(),
+    }
+  );
   return (
     <>
       {isBookLoading && <div>Loading...</div>}
@@ -65,12 +68,12 @@ export const BookReader = ({
                   )}
                   {!word.isTranslated && (
                     <CustomTooltip
-                    text={word.content}
+                      text={word.content}
                       onClick={() => {
                         if (translation?.data.text_lang === word.content)
                           return;
 
-                        if(isUpdating) return;
+                        if (isUpdating) return;
                         setWordToTranslate(word);
                         translateText(word.content);
                       }}

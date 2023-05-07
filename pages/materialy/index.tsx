@@ -1,4 +1,4 @@
-import { getBooks } from "@/api/book/getBooks";
+import { getBooks } from "@/apiFunctions/book/getBooks";
 import withAuth from "@/hoc/withAuth";
 import { Book } from "@/types/Book";
 import {
@@ -16,7 +16,10 @@ const MaterialsPage = ({
   books,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <div data-testid='MaterialsPage--Container' className="w-full h-full flex  flex-wrap gap-4">
+    <div
+      data-testid="MaterialsPage--Container"
+      className="w-full h-full flex  flex-wrap gap-4"
+    >
       {!!books.length &&
         books.map((book) => {
           return (

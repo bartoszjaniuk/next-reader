@@ -1,6 +1,6 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { customSignIn } from "@/api/auth/postSignIn";
+import { customSignIn } from "@/apiFunctions/auth/postSignIn";
 import axios from "axios";
 
 interface SignInResponse {
