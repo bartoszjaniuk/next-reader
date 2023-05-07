@@ -7,6 +7,8 @@ export type Book = {
     user: string;
     pages: Page[];
     session: Session;
+    numberOfSavedWords: number;
+    savedWords: SavedWord[];
 }
 
 export type Page = {
@@ -22,6 +24,12 @@ export type SinglePage = {
 export type Word = {
     _id: string;
     isTranslated: boolean;
+    content: string;
+    translation: string;
+}
+
+export type SavedWord = {
+    _id: string;
     content: string;
     translation: string;
 }

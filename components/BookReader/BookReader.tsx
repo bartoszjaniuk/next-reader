@@ -1,5 +1,5 @@
 import { postTranslateText } from "@/api/translate/translate";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { CustomTooltip } from "../CustomTooltip/CustomTooltip";
 import { Book, Word } from "@/types/Book";
 import { BookScreen } from "../BookScreen/BookScreen";
@@ -8,10 +8,16 @@ import { postUpdateWord } from "@/api/word/updateWord";
 import { useState } from "react";
 
 type BookReaderProps = {
-  book: Book;
+  book?: Book;
+  isBookLoading: boolean;
+  refetchBook: () => void;
 };
 
-export const BookReader = ({ book }: BookReaderProps) => {
+export const BookReader = ({
+  book,
+  isBookLoading,
+  refetchBook,
+}: BookReaderProps) => {
   const [wordToTranslate, setWordToTranslate] = useState<Word | undefined>(
     undefined
   );
@@ -32,49 +38,57 @@ export const BookReader = ({ book }: BookReaderProps) => {
     },
   });
 
-  const { mutate: updateWord } = useMutation(postUpdateWord);
+  const { mutate: updateWord, isLoading: isUpdating } = useMutation(postUpdateWord, {
+    onSuccess: () => refetchBook(),
+  });
   return (
-    <BookNavigationContainer session={book.session}>
-      {(currentPage) => (
-        <BookScreen>
-          {book.pages[currentPage].page.words.map((word, i) => (
-            <>
-              {word.isTranslated && (
-                <CustomTooltip
-                  onClick={() => null}
-                  isTranslationLoading={false}
-                  translation={word.translation}
-                  key={i}
-                  text="custom tooltip"
-                  placement="top"
-                >
-                  <span className="text-primary pb-1">
-                    {word.content + " "}
-                  </span>
-                </CustomTooltip>
-              )}
-              {!word.isTranslated && (
-                <CustomTooltip
-                  onClick={() => {
-                    if (translation?.data.text_lang === word.content) return;
-                    setWordToTranslate(word);
-                    translateText(word.content);
-                  }}
-                  isTranslationLoading={isLoading}
-                  translation={translation?.data.translated_text}
-                  key={i}
-                  text="custom tooltip"
-                  placement="top"
-                >
-                  <span className="hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1">
-                    {word.content + " "}
-                  </span>
-                </CustomTooltip>
-              )}
-            </>
-          ))}
-        </BookScreen>
+    <>
+      {isBookLoading && <div>Loading...</div>}
+      {!isBookLoading && book && (
+        <BookNavigationContainer session={book.session}>
+          {(currentPage) => (
+            <BookScreen>
+              {book.pages[currentPage].page.words.map((word, i) => (
+                <>
+                  {word.isTranslated && (
+                    <CustomTooltip
+                      onClick={() => null}
+                      isTranslationLoading={false}
+                      translation={word.translation}
+                      text={word.content}
+                      key={i}
+                    >
+                      <span className="text-primary pb-1">
+                        {word.content + " "}
+                      </span>
+                    </CustomTooltip>
+                  )}
+                  {!word.isTranslated && (
+                    <CustomTooltip
+                    text={word.content}
+                      onClick={() => {
+                        if (translation?.data.text_lang === word.content)
+                          return;
+
+                        if(isUpdating) return;
+                        setWordToTranslate(word);
+                        translateText(word.content);
+                      }}
+                      isTranslationLoading={isLoading}
+                      translation={translation?.data.translated_text}
+                      key={i}
+                    >
+                      <span className="hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1">
+                        {word.content + " "}
+                      </span>
+                    </CustomTooltip>
+                  )}
+                </>
+              ))}
+            </BookScreen>
+          )}
+        </BookNavigationContainer>
       )}
-    </BookNavigationContainer>
+    </>
   );
 };

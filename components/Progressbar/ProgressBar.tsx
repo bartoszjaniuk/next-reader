@@ -4,7 +4,7 @@ export const ProgressBar = ({
   progressPercentage: number;
 }) => {
   return (
-    <div className="mb-4 w-full min-w-[500px]">
+    <div className="mb-4 w-full lg:w-[700px]">
       <div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-full">
         <div
           style={{ width: `${progressPercentage}%` }}

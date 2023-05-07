@@ -12,7 +12,7 @@ const withAuth = (getServerSideProps: (context: GetServerSidePropsContext)=> any
     if (!session) {
       return {
         redirect: {
-          destination: "/signIn",
+          destination: "/login",
           permanent: false,
         },
       };

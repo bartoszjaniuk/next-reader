@@ -1,12 +1,9 @@
-import { getBook } from "@/api/book/getBook";
+import { getBookAction } from "@/api/book/getBook";
 import { BookReader } from "@/components/BookReader/BookReader";
-import withAuth from "@/hoc/withAuth";
 import { Book } from "@/types/Book";
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from "next";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type MaterialPageParams = {
   id: string;
@@ -15,36 +12,41 @@ type MaterialPageParams = {
 type MaterialPageProps = {
   book: Book;
 };
+const useMaterials = () => {
+  const { query } = useRouter();
+  const bookId = query.id;
+  const { data: userSession } = useSession();
 
-const MaterialPage = ({
-  book,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  console.log({userSession, bookId});
+
+  const { isLoading, data, refetch } = useQuery([`book_${bookId}`], {
+    enabled: !!bookId && !!userSession,
+    queryFn: () => getBookAction(userSession!, bookId as string),
+    retry: 3,
+  });
+
+  return {
+    book: data?.data.data,
+    refetchBook: refetch,
+    isBookLoading: isLoading,
+  };
+};
+
+const MaterialPage = () => {
+  const { book, refetchBook, isBookLoading } = useMaterials();
+
   return (
-    <div className="w-full lg:w-3/4 xl:w-1/2 flex flex-col items-center">
-      <BookReader book={book} />
+    <div
+      data-testid="MaterialPage--Container"
+      className="w-full h-full justify-center flex flex-col items-center py-2"
+    >
+      <BookReader
+        book={book}
+        isBookLoading={isBookLoading}
+        refetchBook={refetchBook}
+      />
     </div>
   );
 };
-
-export const getServerSideProps: GetServerSideProps<
-  MaterialPageProps,
-  MaterialPageParams
-> = withAuth(async (context: GetServerSidePropsContext) => {
-  if (!context.params) {
-    return {
-      props: {},
-      notFound: true,
-    };
-  }
-  const { id } = context.params;
-  const res = await getBook(context, id as string);
-  const book: Book = await res.data.data;
-  return {
-    props: {
-      book,
-    },
-    revalidate: 10,
-  };
-});
 
 export default MaterialPage;

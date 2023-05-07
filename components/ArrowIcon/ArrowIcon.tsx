@@ -27,9 +27,9 @@
 export const ArrowIcon = ({
   className,
   onClick,
-  disabled,
+  disabled = false,
 }: {
-  disabled: boolean;
+  disabled?: boolean;
   className: string;
   onClick?: () => void;
 }) => {
