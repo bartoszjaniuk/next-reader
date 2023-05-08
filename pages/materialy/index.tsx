@@ -18,7 +18,7 @@ const MaterialsPage = ({
   return (
     <div
       data-testid="MaterialsPage--Container"
-      className="w-full h-full flex flex-wrap gap-4"
+      className="w-full h-full flex flex-wrap gap-4 justify-center sm:justify-start pt-8 sm:pt-0"
     >
       {!!books.length &&
         books.map((book) => {
@@ -26,7 +26,7 @@ const MaterialsPage = ({
             <Link
               key={book._id}
               href={`/materialy/${book._id}`}
-              className="max-w-xs w-[15rem] h-[17rem] grid grid-rows-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+              className="max-w-xs w-full sm:w-[15rem] h-[17rem] grid grid-rows-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
             >
               <h5 className="p-6 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {book.title}

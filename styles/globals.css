@@ -7,10 +7,14 @@
     @apply dark:bg-backgroundDark dark:text-font bg-backgroundLight text-gray-500;
   }
   .sidebar-icon {
-    @apply relative flex items-center  justify-start gap-2 h-12 my-3 px-5 text-gray-700 hover:text-primary hover:bg-white rounded-xl cursor-pointer;
+    @apply relative flex items-center  justify-start gap-2 sm:h-12 sm:my-3 px-5 text-gray-700 hover:text-primary hover:bg-white rounded-xl cursor-pointer;
     @apply hover:dark:bg-backgroundDark dark:text-gray-200 dark:shadow-layoutDark  dark:hover:text-primary;
   }
 }
+
+    /* margin-top: 0.75rem; */
+    /* margin-bottom: 0.75rem; */
+    /* height: 3rem; */
 
 .popper-arrow::before {
   position: absolute;

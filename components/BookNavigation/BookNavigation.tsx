@@ -22,7 +22,7 @@ export const BookNavigation = ({
     <>
       <ProgressBar progressPercentage={progress} />
       {children(currentPage)}
-      <div className="flex items-center mt-4">
+      <div className="flex items-center mt-8">
         <ArrowIcon
           disabled={isSessionUpdating}
           onClick={() => handleChangePage("prev")}

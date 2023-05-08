@@ -38,7 +38,7 @@ const MaterialPage = () => {
   return (
     <div
       data-testid="MaterialPage--Container"
-      className="w-full h-full justify-center flex flex-col items-center py-2"
+      className="w-full h-full justify-center flex flex-col items-center py-6"
     >
       <BookReader
         book={book}

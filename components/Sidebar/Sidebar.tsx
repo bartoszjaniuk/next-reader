@@ -6,21 +6,24 @@ import { ArrowIcon } from "../ArrowIcon/ArrowIcon";
 import { useSession } from "next-auth/react";
 import { LoginOrLogout } from "./LoginOrLogout";
 import Link from "next/link";
+import { useThemeMode } from "@/hooks/useThemeMode";
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleIsOpen = () => setIsOpen((prev) => !prev);
   const { status } = useSession();
 
+  const { renderThemeToggler } = useThemeMode();
+
   return (
     <aside
-      className={`bg-layoutLight text-white shadow-md dark:bg-layoutDark dark:text-gray-900 h-screen p-5 px-2  ${
-        isOpen ? "w-60" : "w-20"
-      } duration-300 relative`}
+      className={`bg-layoutLight text-white shadow-md dark:bg-layoutDark dark:text-gray-900 p-5 px-2 duration-300 bottom-0 left-0 flex w-full h-[80px] absolute justify-evenly items-center sm:justify-center sm:h-screen sm:block  ${
+        isOpen ? "sm:w-60" : "sm:w-20"
+      }  sm:relative`}
     >
       <ArrowIcon
         onClick={toggleIsOpen}
-        className={`w-7 h-7 bg-layoutLight text-gray-900 border dark:bg-layoutDark dark:text-white dark:border-backgroundDark text-3xl rounded-full absolute -right-3 top-3 shadow-sm p-1 cursor-pointer ${
+        className={`w-7 h-7 hidden sm:block bg-layoutLight text-gray-900 border dark:bg-layoutDark dark:text-white dark:border-backgroundDark text-3xl rounded-full absolute -right-3 top-3 shadow-sm p-1 cursor-pointer ${
           isOpen ? "rotate-0" : "rotate-180"
         }`}
       />
@@ -29,7 +32,7 @@ export const Sidebar = () => {
         alt="Logo"
         width={60}
         height={60}
-        className="flex my-5"
+        className="hidden my-5 sm:flex"
       />
       {icons.map((icon) => {
         return (
@@ -48,6 +51,9 @@ export const Sidebar = () => {
         );
       })}
       <LoginOrLogout isOpen={isOpen} isLoggedIn={status === "authenticated"} />
+      <li className="sidebar-icon sm:hidden border-l-2 rounded-none ">
+        {renderThemeToggler(true)}
+      </li>
     </aside>
   );
 };
