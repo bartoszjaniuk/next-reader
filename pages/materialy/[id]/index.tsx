@@ -17,7 +17,6 @@ const useMaterials = () => {
   const bookId = query.id;
   const { data: userSession } = useSession();
 
-  console.log({ userSession, bookId });
 
   const { isLoading, data, refetch } = useQuery([`book_${bookId}`], {
     enabled: !!bookId && !!userSession,
