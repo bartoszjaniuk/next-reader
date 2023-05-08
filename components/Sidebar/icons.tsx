@@ -21,7 +21,7 @@ export const icons = [
   },
   {
     name: "Dodaj plik",
-    path: 'dodajPlik',
+    path: '/dodajPlik',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

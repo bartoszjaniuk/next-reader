@@ -6,6 +6,7 @@ import { BookScreen } from "../BookScreen/BookScreen";
 import { BookNavigationContainer } from "../BookNavigation/BookNavigationContainer";
 import { postUpdateWord } from "@/apiFunctions/word/updateWord";
 import { useState } from "react";
+import { Loader } from "../Loader/Loader";
 
 type BookReaderProps = {
   book?: Book;
@@ -46,7 +47,7 @@ export const BookReader = ({
   );
   return (
     <>
-      {isBookLoading && <div>Loading...</div>}
+      {isBookLoading && <Loader size='12'/>}
       {!isBookLoading && book && (
         <BookNavigationContainer session={book.session}>
           {(currentPage) => (

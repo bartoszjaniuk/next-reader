@@ -37,7 +37,7 @@ export const Sidebar = () => {
             <Link className="flex gap-2" href={icon.path}>
               <span className="text-2xl block float-left">{icon.icon}</span>
               <span
-                className={`text-base font-medium flex-1 duration-200 ${
+                className={`text-base font-medium flex-1 whitespace-nowrap duration-200 ${
                   !isOpen && "hidden"
                 } `}
               >

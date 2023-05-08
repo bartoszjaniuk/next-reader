@@ -222,7 +222,7 @@ const LoginPage = () => {
               />
             </svg>
           </div>
-          <div className="w-full md:w-1/2 py-10 px-5 md:px-10 bg-layoutLight dark:bg-layoutDark">
+          <div className="w-full md:w-1/2 py-10 px-9 md:px-10 bg-layoutLight dark:bg-layoutDark">
             <Formik
               initialValues={{ email: "", password: "", tenantKey: "" }}
               validationSchema={validationSchema}
@@ -243,13 +243,8 @@ const LoginPage = () => {
               }}
             >
               {(formik) => (
-                <form
-                  onSubmit={formik.handleSubmit}
-                >
-                  <input
-                    name="csrfToken"
-                    type="hidden"
-                  />
+                <form onSubmit={formik.handleSubmit}>
+                  <input name="csrfToken" type="hidden" />
 
                   <div className="text-red-400 text-md text-center rounded p-2">
                     {error}
@@ -321,6 +316,8 @@ const LoginPage = () => {
                     >
                       <div className="relative flex items-center space-x-4 justify-center">
                         <Image
+                          width={100}
+                          height={100}
                           src="https://tailus.io/sources/blocks/social/preview/images/google.svg"
                           className="absolute left-0 w-5"
                           alt="google logo"
@@ -354,6 +351,8 @@ const LoginPage = () => {
                     >
                       <div className="relative flex items-center space-x-4 justify-center">
                         <Image
+                          width={100}
+                          height={100}
                           src="https://upload.wikimedia.org/wikipedia/en/0/04/Facebook_f_logo_%282021%29.svg"
                           className="absolute left-0 w-5"
                           alt="Facebook logo"

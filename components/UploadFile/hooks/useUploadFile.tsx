@@ -4,9 +4,11 @@ import {
   uploadFileAction,
 } from "@/apiFunctions/uploadFile/uploadFile";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 
 export const useUploadFile = () => {
   const [file, setFile] = useState<File>();
+  const {push} = useRouter();
 
   const fileRef = useRef<HTMLInputElement | null>(null);
 
@@ -19,6 +21,7 @@ export const useUploadFile = () => {
     onSuccess: (data) => {
       if (!data.data.data) return;
       createBook({ payload: { ...data?.data?.data } });
+      push('/materialy')
     },
   });
 
