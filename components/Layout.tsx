@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
     <>
       {isWithoutLayout && (
-        <div className="flex h-[88vh] md:h-screen">
+        <div className="flex pb-[100px] md:pb-0 h-screen">
           <Header />
           {isWithoutLayout && <Sidebar />}
           {isWithoutLayout && <ContentWrapper>{children}</ContentWrapper>}
