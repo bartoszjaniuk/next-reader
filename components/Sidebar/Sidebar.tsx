@@ -36,8 +36,8 @@ export const Sidebar = () => {
       />
       {icons.map((icon) => {
         return (
-          <li key={icon.name} className="sidebar-icon">
-            <Link className="flex gap-2" href={icon.path}>
+          <Link key={icon.name} className="sidebar-icon" href={icon.path}>
+            <li className="flex gap-2">
               <span className="text-2xl block float-left">{icon.icon}</span>
               <span
                 className={`text-base font-medium flex-1 whitespace-nowrap duration-200 ${
@@ -46,8 +46,8 @@ export const Sidebar = () => {
               >
                 {icon.name}
               </span>
-            </Link>
-          </li>
+            </li>
+          </Link>
         );
       })}
       <LoginOrLogout isOpen={isOpen} isLoggedIn={status === "authenticated"} />

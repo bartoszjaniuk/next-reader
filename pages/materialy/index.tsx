@@ -21,7 +21,7 @@ const MaterialsPage = ({
       className="w-full h-full flex flex-wrap gap-4 justify-center sm:justify-start pt-8 sm:pt-0"
     >
       {!!books.length &&
-        books.map((book) => {
+        books.map((book: Book) => {
           return (
             <Link
               key={book._id}
@@ -60,7 +60,6 @@ export const getServerSideProps: GetServerSideProps<Props> = withAuth(
         };
     } catch (error) {
       console.log(error);
-      // throw new Error(error.response.data.message)
     }
   }
 );
