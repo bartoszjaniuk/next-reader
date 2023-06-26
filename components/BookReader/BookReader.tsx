@@ -32,7 +32,7 @@ export const BookReader = ({
       if (!wordToTranslate) return;
       updateWord({
         isTranslated: true,
-        translation: data.data.translated_text,
+        translation: data.data.translatedText,
         content: wordToTranslate.content,
         id: wordToTranslate._id,
       });
@@ -47,7 +47,7 @@ export const BookReader = ({
   );
   return (
     <>
-      {isBookLoading && <Loader size='12'/>}
+      {isBookLoading && <Loader size="12" />}
       {!isBookLoading && book && (
         <BookNavigationContainer session={book.session}>
           {(currentPage) => (
@@ -79,7 +79,7 @@ export const BookReader = ({
                         translateText(word.content);
                       }}
                       isTranslationLoading={isLoading}
-                      translation={translation?.data.translated_text}
+                      translation={translation?.data.translatedText}
                       key={i}
                     >
                       <span className="hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1">

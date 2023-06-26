@@ -9,7 +9,8 @@ export const uploadFileAction = async (
   // @ts-ignore
   const token = session?.user?.token;
   const formData = new FormData();
-  formData.append("file", fileToUpload);
+  const t = formData.append("file", fileToUpload);
+  console.log({ t });
   // TODO: CHANGE REQUEST INTO ENV
   return axios.post(
     // `https://pdf-serializer-api.onrender.com/api/v1/serialize`,
