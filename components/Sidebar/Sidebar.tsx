@@ -27,13 +27,15 @@ export const Sidebar = () => {
           isOpen ? "rotate-0" : "rotate-180"
         }`}
       />
-      <Image
-        src={LogoImage}
-        alt="Logo"
-        width={60}
-        height={60}
-        className="hidden my-5 sm:flex"
-      />
+      <div className="flex w-full justify-center">
+        <Image
+          src={LogoImage}
+          alt="Logo"
+          width={60}
+          height={60}
+          className="hidden my-5 sm:flex sm:self-center"
+        />
+      </div>
       {icons.map((icon) => {
         return (
           <Link key={icon.name} className="sidebar-icon" href={icon.path}>

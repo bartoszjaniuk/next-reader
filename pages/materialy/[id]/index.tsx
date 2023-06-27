@@ -1,26 +1,17 @@
-import { getBookAction } from "@/apiFunctions/book/getBook";
+import { getPageByIdAction } from "@/apiFunctions/book/getBook";
 import { BookReader } from "@/components/BookReader/BookReader";
-import { Book } from "@/types/Book";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-type MaterialPageParams = {
-  id: string;
-};
-
-type MaterialPageProps = {
-  book: Book;
-};
 const useMaterials = () => {
   const { query } = useRouter();
   const bookId = query.id;
   const { data: userSession } = useSession();
 
-
-  const { isLoading, data, refetch } = useQuery([`book_${bookId}`], {
+  const { data, refetch, isLoading } = useQuery([`book_${bookId}`], {
     enabled: !!bookId && !!userSession,
-    queryFn: () => getBookAction(userSession!, bookId as string),
+    queryFn: () => getPageByIdAction(userSession!, bookId as string),
     retry: 3,
   });
 

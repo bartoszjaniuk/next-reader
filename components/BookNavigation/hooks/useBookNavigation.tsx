@@ -7,9 +7,13 @@ import { useCallback, useEffect, useState } from "react";
 
 type UseBookNavigationProps = {
   session: Session;
+  refetchBook: () => void;
 };
 
-export const useBookNavigation = ({ session }: UseBookNavigationProps) => {
+export const useBookNavigation = ({
+  session,
+  refetchBook,
+}: UseBookNavigationProps) => {
   const { data: userSession } = useSession();
 
   const { refetch } = useQuery(
@@ -26,6 +30,9 @@ export const useBookNavigation = ({ session }: UseBookNavigationProps) => {
     isLoading: isSessionUpdating,
   } = useMutation({
     mutationFn: updateSessionAction,
+    onSuccess: () => {
+      refetchBook();
+    },
   });
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 export const useUploadFile = () => {
   const [file, setFile] = useState<File>();
-  const {push} = useRouter();
+  const { push } = useRouter();
 
   const fileRef = useRef<HTMLInputElement | null>(null);
 
@@ -20,8 +20,9 @@ export const useUploadFile = () => {
     mutationFn: uploadFileAction,
     onSuccess: (data) => {
       if (!data.data.data) return;
+
       createBook({ payload: { ...data?.data?.data } });
-      push('/materialy')
+      push("/materialy");
     },
   });
 

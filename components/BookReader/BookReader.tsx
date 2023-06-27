@@ -7,6 +7,7 @@ import { BookNavigationContainer } from "../BookNavigation/BookNavigationContain
 import { postUpdateWord } from "@/apiFunctions/word/updateWord";
 import { useState } from "react";
 import { Loader } from "../Loader/Loader";
+import { Font } from "@/utils/fonts";
 
 type BookReaderProps = {
   book?: Book;
@@ -45,14 +46,18 @@ export const BookReader = ({
       onSuccess: () => refetchBook(),
     }
   );
+
   return (
     <>
       {isBookLoading && <Loader size="12" />}
       {!isBookLoading && book && (
-        <BookNavigationContainer session={book.session}>
+        <BookNavigationContainer
+          refetchBook={refetchBook}
+          session={book.session}
+        >
           {(currentPage) => (
             <BookScreen>
-              {book.pages[currentPage].page.words.map((word, i) => (
+              {book.pages[0].page.words.map((word, i) => (
                 <>
                   {word.isTranslated && (
                     <CustomTooltip
@@ -71,10 +76,6 @@ export const BookReader = ({
                     <CustomTooltip
                       text={word.content}
                       onClick={() => {
-                        if (translation?.data.text_lang === word.content)
-                          return;
-
-                        if (isUpdating) return;
                         setWordToTranslate(word);
                         translateText(word.content);
                       }}
@@ -82,7 +83,9 @@ export const BookReader = ({
                       translation={translation?.data.translatedText}
                       key={i}
                     >
-                      <span className="hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1">
+                      <span
+                        className={`hover:border-primary border-transparent border-b-2 rounded-b-lg pb-1 ${Font.raleway.className}`}
+                      >
                         {word.content + " "}
                       </span>
                     </CustomTooltip>

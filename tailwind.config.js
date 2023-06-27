@@ -17,6 +17,9 @@ module.exports = {
         font: "#dddddd",
       },
     },
+    fontFamily: {
+      primary: ["var(--font-raleway)"],
+    },
   },
   plugins: [],
 };
