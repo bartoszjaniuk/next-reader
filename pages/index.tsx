@@ -1,4 +1,3 @@
-import { UploadFile } from "@/components/UploadFile/UploadFile";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { Inter } from "next/font/google";
 import withAuth from "@/hoc/withAuth";
