@@ -1,11 +1,8 @@
-import React from 'react'
-import { UploadFile } from '@/components/UploadFile/UploadFile'
-
+import React from "react";
+import UploadFileContainer from "@/components/UploadFile/UploadFile.container";
 
 const AddFilePage = () => {
-  return<>
-        <UploadFile />
-  </>
-}
+  return <UploadFileContainer />;
+};
 
-export default AddFilePage
+export default AddFilePage;

@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import imageUrl from "../../assets/login2.svg";
+import { Loader } from "@/components/Loader/Loader";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -292,7 +292,7 @@ const LoginPage = () => {
                       type="submit"
                       className="bg-primary text-gray-100 p-3 rounded-lg w-full"
                     >
-                      {formik.isSubmitting ? "Proszę czekać..." : "Zaloguj"}
+                      {formik.isSubmitting ? <Loader /> : "Zaloguj"}
                     </button>
                   </div>
                   <div className="flex justify-between pt-5">

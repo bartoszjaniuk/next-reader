@@ -1,4 +1,5 @@
 import { Book } from "@/types/Book";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -13,6 +14,13 @@ export const MaterialCard = ({ book }: MaterialCardProps) => {
       href={`/materialy/${book._id}`}
       className="max-w-xs w-full sm:w-[16rem] h-[17rem] grid grid-rows-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     >
+      <Image
+        className="flex justify-self-center"
+        src={"/placeholder.svg"}
+        width={100}
+        height={100}
+        alt="photo placeholder"
+      />
       <h5 className="p-6 mb-2 text-2xl font-bold tracking-tight text-primary uppercase">
         {book.title}
       </h5>

@@ -39,9 +39,9 @@ export const useUploadFile = () => {
     }
   };
 
-  const handleUploadFile = () => {
+  const handleUploadFile = (bookName: string) => {
     if (!file) return;
-    uploadFile(file);
+    uploadFile({ fileToUpload: file, bookName });
   };
 
   const removeFile = () => {
