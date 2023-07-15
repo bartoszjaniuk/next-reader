@@ -9,6 +9,7 @@ export type Book = {
   session: Session;
   numberOfSavedWords: number;
   savedWords: SavedWord[];
+  imageUrl?: string;
 };
 
 export type Page = {

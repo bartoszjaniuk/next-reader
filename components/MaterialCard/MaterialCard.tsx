@@ -16,7 +16,7 @@ export const MaterialCard = ({ book }: MaterialCardProps) => {
     >
       <Image
         className="flex justify-self-center"
-        src={"/placeholder.svg"}
+        src={`${book.imageUrl ? book.imageUrl : "/placeholder.svg"}`}
         width={100}
         height={100}
         alt="photo placeholder"

@@ -1,62 +1,93 @@
 import { ChangeEvent, useRef, useState } from "react";
-import {
-  createBookAction,
-  uploadFileAction,
-} from "@/apiFunctions/uploadFile/uploadFile";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { uploadFileAndSerialize } from "@/apiFunctions/book/uploadFileAndSerialize";
+import { createBook as createBookMutation } from "@/apiFunctions/book/createBook";
+import { uploadImageToCloudinary } from "@/apiFunctions/book/uploadImageToCloudinary";
 
-export const useUploadFile = () => {
-  const [file, setFile] = useState<File>();
+type UseUploadFileProps = {
+  step: number;
+  prevStep: () => void;
+  resetStep: () => void;
+  nextStep: () => void;
+};
+
+export const useUploadFile = ({
+  resetStep,
+  step,
+  nextStep,
+}: UseUploadFileProps) => {
+  const [cloudinaryImageUrl, setCloudinaryImageUrl] = useState("");
+  const [bookFile, setBookFile] = useState<File>();
   const { push } = useRouter();
 
-  const fileRef = useRef<HTMLInputElement | null>(null);
+  const bookFileRef = useRef<HTMLInputElement | null>(null);
 
+  // DODAWANIE KSIAZKI, NIE SAMEGO PLIKU
   const {
     data,
-    mutate: uploadFile,
+    mutate: serializeAndUploadBook,
     isLoading,
   } = useMutation({
-    mutationFn: uploadFileAction,
+    mutationFn: uploadFileAndSerialize,
     onSuccess: (data) => {
       if (!data.data.data) return;
-
-      createBook({ payload: { ...data?.data?.data } });
+      createBook({
+        payload: { ...data?.data?.data, imageUrl: cloudinaryImageUrl },
+      });
       push("/materialy");
     },
   });
 
   const { mutate: createBook } = useMutation({
-    mutationFn: createBookAction,
+    mutationFn: createBookMutation,
     onSuccess: (data) => {
       console.log({ data });
     },
   });
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const { mutate: uploadImageMutation, isLoading: isImageLoading } =
+    useMutation({
+      mutationFn: uploadImageToCloudinary,
+      onSuccess: (data) => {
+        setCloudinaryImageUrl(data.data.url);
+        nextStep();
+      },
+    });
+
+  const handleBookFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      setBookFile(e.target.files[0]);
     }
   };
 
-  const handleUploadFile = (bookName: string) => {
-    if (!file) return;
-    uploadFile({ fileToUpload: file, bookName });
+  const handleUploadFile = ({ image }: { image: File }) => {
+    if (!bookFile) return;
+    if (!cloudinaryImageUrl) return uploadImageMutation({ imageFile: image });
+
+    nextStep();
   };
 
-  const removeFile = () => {
-    setFile(undefined);
-    if (!fileRef.current) return;
-    fileRef.current.value = "";
+  const handleSerializeAndUploadBook = (bookName: string, fileToUpload: File) =>
+    serializeAndUploadBook({ bookName, fileToUpload });
+
+  const handleRemoveBookFile = () => {
+    setBookFile(undefined);
+    resetStep();
+    if (!bookFileRef.current) return;
+    bookFileRef.current.value = "";
   };
 
   return {
     data,
-    handleFileChange,
+    isImageLoading,
+    cloudinaryImageUrl,
+    handleBookFileChange,
     handleUploadFile,
-    removeFile,
-    file,
-    fileRef,
+    handleSerializeAndUploadBook,
+    handleRemoveBookFile,
+    bookFile,
+    bookFileRef,
     isLoading,
   };
 };

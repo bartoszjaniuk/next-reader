@@ -1,8 +1,8 @@
-import { Book, SerializedBook } from "@/components/UploadFile/UploadFile.types";
+import { SerializedBook } from "@/components/UploadFile/UploadFile.types";
 import axios, { AxiosResponse } from "axios";
 import { getSession } from "next-auth/react";
 
-export const uploadFileAction = async ({
+export const uploadFileAndSerialize = async ({
   fileToUpload,
   bookName,
 }: {
@@ -19,18 +19,6 @@ export const uploadFileAction = async ({
   return axios.post(`${process.env.BACKEND_API}/serialize`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-export const createBookAction = async ({ payload }: { payload: Book }) => {
-  const session = await getSession();
-  // @ts-ignore
-  const token = session?.user?.token;
-  return axios.post(`${process.env.BACKEND_API}/book`, payload, {
-    headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });

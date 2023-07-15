@@ -1,35 +1,44 @@
-
-export const Badge = ({file, handleRemoveFile}: {file: File, handleRemoveFile: () => void}) => {
+type BadgeProps = {
+  file: File;
+  onRemoveFile: () => void;
+  label: string;
+};
+export const Badge = ({ file, onRemoveFile, label }: BadgeProps) => {
   return (
-    <div
-      id="alert-border-1"
-      className="mt-5 flex p-4 mb-4 w-full text-blue-800  border-blue-300 bg-blue-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800"
-      role="alert"
-    >
-      <div className="ml-3 text-sm font-medium">{file.name.toUpperCase()}</div>
-      <button
-      onClick={handleRemoveFile}
-        type="button"
-        className="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
-        data-dismiss-target="#alert-border-1"
-        aria-label="Close"
+    <div className="w-full">
+      <p className="block mb-2 text-md font-medium text-gray-900 dark:text-white">
+        {label}
+      </p>
+      <div
+        id="alert-border-1"
+        className="mt-5 flex p-4 mb-4 w-full text-gray-900 rounded-md bg-layoutLight border border-gray-200  dark:text-layoutLight dark:bg-layoutDark dark:border-gray-700"
+        role="alert"
       >
-        <span className="sr-only">Dismiss</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
+        <div className="text-sm font-medium">{file.name.toUpperCase()}</div>
+        <button
+          onClick={onRemoveFile}
+          type="button"
+          className="ml-auto -mx-1.5 -my-1.5  text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-600 hover:text-backgroundLight inline-flex h-8 w-8  dark:text-red-400 dark:hover:bg-red-400 dark:hover:text-layoutLight"
+          data-dismiss-target="#alert-border-1"
+          aria-label="Close"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-          />
-        </svg>
-      </button>
+          <span className="sr-only">Dismiss</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };

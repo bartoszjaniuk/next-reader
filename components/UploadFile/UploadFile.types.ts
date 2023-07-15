@@ -4,6 +4,7 @@ export type SerializedBook = {
 };
 
 export type Book = {
+  imageUrl?: string;
   numberOfPages: number;
   pages: PageElement[];
   title: string;

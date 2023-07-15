@@ -1,14 +1,14 @@
 import { Loader } from "../Loader/Loader";
 
+type UploadButtonProps = {
+  uploadFileIsLoading: boolean;
+  isValid: boolean;
+};
+
 export const UploadButton = ({
-  handleUploadFile,
   uploadFileIsLoading,
   isValid,
-}: {
-  uploadFileIsLoading: boolean;
-  handleUploadFile: (bookName: string) => void;
-  isValid: boolean;
-}) => {
+}: UploadButtonProps) => {
   const isDisabled = !isValid || uploadFileIsLoading;
   const disabledClasses =
     "text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center";
