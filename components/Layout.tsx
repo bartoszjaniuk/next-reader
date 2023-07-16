@@ -2,25 +2,25 @@ import { useRouter } from "next/router";
 import { ContentWrapper } from "./ContentWrapper/ContentWrapper";
 import { Header } from "./Header/Header";
 import { Sidebar } from "./Sidebar/Sidebar";
+import { useState } from "react";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const isWithoutLayout = router.pathname !== "/login";
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleIsOpen = () => setIsOpen((prev) => !prev);
 
   return (
-    // <div className="flex h-screen">
-    //   <Header />
-    //   {isWithoutLayout && <Sidebar />}
-    //   {isWithoutLayout && <ContentWrapper>{children}</ContentWrapper>}
-    //   {!isWithoutLayout && children}
-    // </div>
-
     <>
       {isWithoutLayout && (
-        <div className="flex pb-[100px] md:pb-0 h-screen">
+        <div className="flex pb-[100px] md:pb-0 h-full">
           <Header />
-          {isWithoutLayout && <Sidebar />}
-          {isWithoutLayout && <ContentWrapper>{children}</ContentWrapper>}
+          {isWithoutLayout && (
+            <Sidebar isOpen={isOpen} toggleIsOpen={toggleIsOpen} />
+          )}
+          {isWithoutLayout && (
+            <ContentWrapper isOpen={isOpen}>{children}</ContentWrapper>
+          )}
           {!isWithoutLayout && children}
         </div>
       )}

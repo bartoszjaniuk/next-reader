@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Image from "next/image";
 import { icons } from "./icons";
 import LogoImage from "../../assets/book-logo.png";
@@ -8,18 +7,21 @@ import { LoginOrLogout } from "./LoginOrLogout";
 import Link from "next/link";
 import { useThemeMode } from "@/hooks/useThemeMode";
 
-export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleIsOpen = () => setIsOpen((prev) => !prev);
+type SidebarProps = {
+  isOpen: boolean;
+  toggleIsOpen: () => void;
+};
+
+export const Sidebar = ({ isOpen, toggleIsOpen }: SidebarProps) => {
   const { status } = useSession();
 
   const { renderThemeToggler } = useThemeMode();
 
   return (
     <aside
-      className={`bg-layoutLight text-white shadow-md dark:bg-layoutDark dark:text-gray-900 p-5 px-2 duration-300 bottom-0 left-0 flex w-full h-[80px] fixed justify-evenly items-center sm:justify-center sm:h-screen sm:block  ${
+      className={`bg-layoutLight text-white shadow-md dark:bg-layoutDark dark:text-gray-900 p-5 px-2 duration-300 bottom-0 left-0 flex w-full h-[80px] fixed justify-evenly items-center sm:justify-center sm:h-full sm:block  ${
         isOpen ? "sm:w-60" : "sm:w-20"
-      }  sm:relative`}
+      }  sm:fixed`}
     >
       <ArrowIcon
         onClick={toggleIsOpen}

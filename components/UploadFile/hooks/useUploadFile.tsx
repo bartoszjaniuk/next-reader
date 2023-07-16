@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { uploadFileAndSerialize } from "@/apiFunctions/book/uploadFileAndSerialize";
@@ -12,18 +12,22 @@ type UseUploadFileProps = {
   nextStep: () => void;
 };
 
-export const useUploadFile = ({
-  resetStep,
-  step,
-  nextStep,
-}: UseUploadFileProps) => {
+export const useUploadFile = ({ resetStep, nextStep }: UseUploadFileProps) => {
+  const { push } = useRouter();
   const [cloudinaryImageUrl, setCloudinaryImageUrl] = useState("");
   const [bookFile, setBookFile] = useState<File>();
-  const { push } = useRouter();
+  const [bookFileErrorMessage, setBookFileErrorMessage] = useState<
+    string | undefined
+  >(undefined);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setBookFileErrorMessage(undefined);
+    }, 4000);
+  }, [bookFileErrorMessage, setBookFileErrorMessage]);
 
   const bookFileRef = useRef<HTMLInputElement | null>(null);
 
-  // DODAWANIE KSIAZKI, NIE SAMEGO PLIKU
   const {
     data,
     mutate: serializeAndUploadBook,
@@ -56,8 +60,27 @@ export const useUploadFile = ({
     });
 
   const handleBookFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
+    const file = e.target.files[0];
+
+    const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSizeInBytes) {
+      return setBookFileErrorMessage(
+        "Limit wielkości pliku został przekroczony. 🔥"
+      );
+    }
+
+    const allowedTypes = ["application/pdf"];
+    if (!allowedTypes.includes(file.type)) {
+      return setBookFileErrorMessage(
+        "Nieprawidłowy typ pliku. Tylko pliki PDF są dozwolone."
+      );
+    }
+
     if (e.target.files) {
       setBookFile(e.target.files[0]);
+      setBookFileErrorMessage(undefined);
     }
   };
 
@@ -73,6 +96,7 @@ export const useUploadFile = ({
 
   const handleRemoveBookFile = () => {
     setBookFile(undefined);
+    setBookFileErrorMessage(undefined);
     resetStep();
     if (!bookFileRef.current) return;
     bookFileRef.current.value = "";
@@ -89,5 +113,6 @@ export const useUploadFile = ({
     bookFile,
     bookFileRef,
     isLoading,
+    bookFileErrorMessage,
   };
 };

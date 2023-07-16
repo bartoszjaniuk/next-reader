@@ -12,6 +12,7 @@ type SecondStepProps = {
   imageFile: File | undefined;
   imageFileRef: React.MutableRefObject<HTMLInputElement | null>;
   previewUrl: any;
+  imageFileErrorMessage?: string;
 };
 
 export const SecondStep = ({
@@ -22,6 +23,7 @@ export const SecondStep = ({
   onImageChange,
   previewUrl,
   register,
+  imageFileErrorMessage,
 }: SecondStepProps) => {
   return (
     <>
@@ -33,6 +35,7 @@ export const SecondStep = ({
             onRemoveFile={handleRemoveBookFile}
           />
           <UploadFileForm
+            imageFileErrorMessage={imageFileErrorMessage}
             register={register}
             handleImageChange={onImageChange}
             imageFile={imageFile}

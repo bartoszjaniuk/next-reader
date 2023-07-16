@@ -7,6 +7,7 @@ type FirstStepProps = {
   bookFileRef: React.MutableRefObject<HTMLInputElement | null>;
   onBookFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemoveBookFile: () => void;
+  errorMessage?: string;
 };
 
 export const FirstStep = ({
@@ -14,6 +15,7 @@ export const FirstStep = ({
   bookFileRef,
   onBookFileChange,
   onRemoveBookFile,
+  errorMessage,
 }: FirstStepProps) => {
   return (
     <>
@@ -22,6 +24,7 @@ export const FirstStep = ({
           label="Plik PDF"
           handleFileChange={onBookFileChange}
           fileRef={bookFileRef}
+          errorMessage={errorMessage}
         />
       )}
       {bookFile && (

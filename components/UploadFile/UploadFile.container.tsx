@@ -7,12 +7,12 @@ import { schema } from "./schema";
 import { useFile } from "./hooks/useFile";
 import { stepTitle } from "./UploadFile.consts";
 import { StepButtons } from "../StepButtons/StepButtons";
-import { FirstStep } from "@/app/uploadFile/components/firstStep/FirstStep";
+import { FirstStep } from "@/sections/uploadFile/components/firstStep/FirstStep";
 import { useUploadFile } from "./hooks/useUploadFile";
 import { useStepper } from "@/hooks/useStepper";
-import { SecondStep } from "@/app/uploadFile/components/secondStep/SecondStep";
-import { ThirdStep } from "@/app/uploadFile/components/thirdStep/ThirdStep";
-import { checkIfButtonIsDisabled } from "@/app/uploadFile/utils/checkIfButtonIsDisabled";
+import { SecondStep } from "@/sections/uploadFile/components/secondStep/SecondStep";
+import { ThirdStep } from "@/sections/uploadFile/components/thirdStep/ThirdStep";
+import { checkIfButtonIsDisabled } from "@/sections/uploadFile/utils/checkIfButtonIsDisabled";
 import { Loader } from "../Loader/Loader";
 
 export const UploadFileContainer = () => {
@@ -28,6 +28,7 @@ export const UploadFileContainer = () => {
     isLoading: uploadFileIsLoading,
     isImageLoading,
     handleSerializeAndUploadBook,
+    bookFileErrorMessage,
   } = useUploadFile({ step, prevStep, resetStep, nextStep });
 
   const {
@@ -45,6 +46,7 @@ export const UploadFileContainer = () => {
     file: imageFile,
     fileRef: imageFileRef,
     previewUrl,
+    imageFileErrorMessage,
   } = useFile();
 
   const handleFirstStep = () => {
@@ -74,10 +76,12 @@ export const UploadFileContainer = () => {
               bookFileRef={bookFileRef}
               onBookFileChange={handleBookFileChange}
               onRemoveBookFile={handleRemoveBookFile}
+              errorMessage={bookFileErrorMessage}
             />
           )}
           {step === 1 && (
             <SecondStep
+              imageFileErrorMessage={imageFileErrorMessage}
               bookFile={bookFile}
               imageFile={imageFile}
               imageFileRef={imageFileRef}

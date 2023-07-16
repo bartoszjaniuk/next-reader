@@ -4,16 +4,25 @@ type DragAndDropZoneProps = {
   fileRef: MutableRefObject<HTMLInputElement | null>;
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
+  errorMessage?: string;
+  isPDFFormat?: boolean;
 };
 
 export const DragAndDropZone = ({
   handleFileChange,
   fileRef,
   label,
+  errorMessage,
+  isPDFFormat = true,
 }: DragAndDropZoneProps) => {
   return (
     <>
       <div className="mb-6  w-full">
+        {errorMessage && (
+          <div className="w-full bg-red-600 text-white rounded-md p-4 mt-4 mb-4">
+            {errorMessage}
+          </div>
+        )}
         <span className="block mb-2 text-md font-medium text-backgroundDark dark:text-layoutLight">
           {label}
         </span>
@@ -43,7 +52,7 @@ export const DragAndDropZone = ({
               lub zaznacz i przeciągnij
             </p>
             <p className="text-xs text-backgroundDark dark:text-layoutLight">
-              plik PDF
+              {isPDFFormat ? "plik PDF" : "pliki JPG, PNG"}
             </p>
           </div>
           <input

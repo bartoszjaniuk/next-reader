@@ -10,6 +10,7 @@ type UploadFileFormProps = {
   imageFile: File | undefined;
   imageFileRef: React.MutableRefObject<HTMLInputElement | null>;
   previewUrl: any;
+  imageFileErrorMessage?: string;
 };
 
 export const UploadFileForm = ({
@@ -18,6 +19,7 @@ export const UploadFileForm = ({
   imageFile,
   imageFileRef,
   previewUrl,
+  imageFileErrorMessage,
 }: UploadFileFormProps) => {
   return (
     <form className="w-full">
@@ -40,6 +42,8 @@ export const UploadFileForm = ({
           fileRef={imageFileRef}
           handleFileChange={handleImageChange}
           label="Okładka"
+          isPDFFormat={false}
+          errorMessage={imageFileErrorMessage}
         />
       )}
       {imageFile && previewUrl && (
