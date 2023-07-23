@@ -8,10 +8,6 @@ import {
   InferGetServerSidePropsType,
 } from "next";
 
-interface Props {
-  books: Book[];
-}
-
 const MaterialsPage = ({
   books,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -29,18 +25,17 @@ const MaterialsPage = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = withAuth(
+export const getServerSideProps: GetServerSideProps = withAuth(
   async (context: GetServerSidePropsContext) => {
     try {
       const res = await getBooks(context);
-      if (res.data.data)
-        return {
-          props: {
-            books: res.data.data,
-          },
-        };
+      return {
+        props: {
+          books: res.data.data,
+        },
+      };
     } catch (error) {
-      console.log(error);
+      return { notFound: true };
     }
   }
 );

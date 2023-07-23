@@ -6,7 +6,10 @@ import { useState } from "react";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const isWithoutLayout = router.pathname !== "/login";
+  const pathsWithoutSidebar = ["/login", "/register"];
+  const isWithoutLayout = !pathsWithoutSidebar.some(
+    (path) => path === router.pathname
+  );
   const [isOpen, setIsOpen] = useState(false);
   const toggleIsOpen = () => setIsOpen((prev) => !prev);
 

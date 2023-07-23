@@ -3,12 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { customSignIn } from "@/apiFunctions/auth/postSignIn";
 import axios from "axios";
 
-interface SignInResponse {
-  status: string;
-  token: string;
-  data: UserData;
-}
-
 interface UserData {
   _id: string;
   email: string;
@@ -75,7 +69,6 @@ export const authOptions: AuthOptions = {
   debug: true,
   pages: {
     signIn: "/login",
-    // error: "/login",
   },
   secret: process.env.JWT_SECRET,
 };

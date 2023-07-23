@@ -2,7 +2,9 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 
-const withAuth = (getServerSideProps: (context: GetServerSidePropsContext)=> any) => {
+const withAuth = (
+  getServerSideProps: (context: GetServerSidePropsContext) => any
+) => {
   return async (context: GetServerSidePropsContext) => {
     const session = await getServerSession(
       context.req,
@@ -18,19 +20,23 @@ const withAuth = (getServerSideProps: (context: GetServerSidePropsContext)=> any
       };
     }
     const getServerSidePropsData = await getServerSideProps(context);
-    if(getServerSidePropsData?.props) {
+
+    if (getServerSidePropsData.props) {
       return {
+        ...getServerSidePropsData,
         props: {
-         ...getServerSidePropsData.props,
-         user: session.user,
-        }
-       }
+          ...getServerSidePropsData.props,
+          user: session.user,
+        },
+      };
     }
+
     return {
-     props: {
-      user: session.user,
-     }
-    }   
+      ...getServerSidePropsData,
+      props: {
+        user: session.user,
+      },
+    };
   };
 };
 

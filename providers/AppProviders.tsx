@@ -3,11 +3,9 @@ import { ThemeProvider } from "next-themes";
 import React from "react";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 import { ErrorBoundary } from "react-error-boundary";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function fallbackRender(error: any) {
-
   return (
     <div role="alert">
       <p>Coś poszło nie tak...</p>
@@ -19,12 +17,12 @@ function fallbackRender(error: any) {
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider attribute="class">
-      <ReactQueryProvider>
-        <ReactQueryDevtools/>
-        <ErrorBoundary fallbackRender={fallbackRender}>
+      <ErrorBoundary fallbackRender={fallbackRender}>
+        <ReactQueryProvider>
+          <ReactQueryDevtools />
           <Layout>{children}</Layout>
-        </ErrorBoundary>
-      </ReactQueryProvider>
+        </ReactQueryProvider>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 };

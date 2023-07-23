@@ -5,4 +5,7 @@ export const validationSchema = Yup.object({
     .email("Nieprawidłowy adres email")
     .required("Pole jest wymagane"),
   password: Yup.string().required("Pole jest wymagane"),
+  confirmPassword: Yup.string()
+    .required("Pole jest wymagane")
+    .oneOf([Yup.ref("password"), ""], "Hasła róznia się"),
 });

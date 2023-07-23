@@ -1,14 +1,22 @@
-import { validationSchema } from "@/consts/signIn.consts";
-import { ErrorMessage, Field, Formik } from "formik";
-import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { Formik, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { validationSchema } from "@/consts/signUp.consts";
 import { Loader } from "@/components/Loader/Loader";
-import Link from "next/link";
+import { customSignUp } from "@/apiFunctions/auth/postSignUp";
+import { useMutation } from "@tanstack/react-query";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const router = useRouter();
+
   const [error, setError] = useState<string | null | undefined>(null);
+  const { mutate, isLoading } = useMutation({
+    mutationFn: customSignUp,
+    onSuccess: () => {
+      router.push("/login");
+    },
+  });
+
   return (
     <main className="w-full h-screen flex items-center justify-center md:px-6">
       {/* CARD */}
@@ -224,22 +232,15 @@ const LoginPage = () => {
           </div>
           <div className="w-full md:w-1/2 py-10 px-9 md:px-10 bg-layoutLight dark:bg-layoutDark">
             <Formik
-              initialValues={{ email: "", password: "", tenantKey: "" }}
+              initialValues={{
+                email: "",
+                password: "",
+                confirmPassword: "",
+                tenantKey: "",
+              }}
               validationSchema={validationSchema}
               onSubmit={async (values, { setSubmitting }) => {
-                const res = await signIn("credentials", {
-                  redirect: false,
-                  email: values.email,
-                  password: values.password,
-                  callbackUrl: `${window.location.origin}`,
-                });
-                if (res?.error) {
-                  setError(res.error);
-                } else {
-                  setError(null);
-                }
-                if (res?.url) router.push(res.url);
-                setSubmitting(false);
+                mutate(values);
               }}
             >
               {(formik) => (
@@ -287,27 +288,40 @@ const LoginPage = () => {
                       <ErrorMessage name="password" />
                     </div>
                   </div>
+
+                  <div className="mb-6 min-h-[98px]">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Powtórz hasło
+                      <Field
+                        name="confirmPassword"
+                        aria-label="enter your confirmPassword"
+                        aria-required="true"
+                        type="password"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      />
+                    </label>
+
+                    <div className="text-red-600 text-sm">
+                      <ErrorMessage name="confirmPassword" />
+                    </div>
+                  </div>
                   <div className="flex items-center justify-center">
                     <button
                       type="submit"
-                      className="bg-primary text-gray-100 p-3 rounded-lg w-full"
+                      className="bg-primary text-gray-100 p-3 rounded-lg w-full flex justify-center"
                     >
-                      {formik.isSubmitting ? <Loader /> : "Zaloguj"}
+                      {isLoading ? <Loader /> : "Zarejestruj się"}
                     </button>
                   </div>
                   <div className="flex justify-between pt-5">
-                    <Link
-                      href="/register"
-                      className="font-medium text-primary dark:text-primaryHover hover:underline"
-                    >
-                      Utwórz konto
-                    </Link>
-
                     <a
                       href="#"
                       className="font-medium text-primary dark:text-primaryHover hover:underline"
                     >
-                      Zapomniałeś hasła?
+                      Posiadasz konto? Zaloguj się
                     </a>
                   </div>
                 </form>
@@ -320,4 +334,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
